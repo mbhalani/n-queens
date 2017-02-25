@@ -79,12 +79,22 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      let row = this.get(rowIndex);
+      return row.reduce((sum, item) => {
+        return sum + item;
+      }, 0) > 1;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      let grid = this.get('n');
+      for (let i = 0; i < grid; i++) {
+        if (this.hasRowConflictAt(i)) {
+          return true;
+        }
+      }
+
+      return false;
     },
 
 
@@ -94,12 +104,28 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      let grid = this.get('n');
+      let count = 0;
+
+      for (let i = 0; i < grid; i++) {
+        let row = this.get(i);
+        count += row[colIndex];
+      }
+
+      return count > 1;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      let grid = this.get('n');
+
+      for (let i = 0; i < grid; i++) {
+        if (this.hasColConflictAt(i)) {
+          return true;
+        }
+      }
+
+      return false;
     },
 
 
@@ -109,12 +135,31 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      let grid = this.get('n');
+      let count = 0;
+      let rowIdx = 0;
+      let colIdx = majorDiagonalColumnIndexAtFirstRow;
+
+      for ( ; rowIdx < grid && colIdx < grid; rowIdx++, colIdx++) {
+        if (colIdx >= 0) {
+          let row = this.get(rowIdx);
+          count += row[colIdx];
+        }
+      }
+      return count > 1;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      let grid = this.get('n');
+
+      for (let i = 1 - grid; i < grid; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+
+      return false;
     },
 
 
