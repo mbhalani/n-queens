@@ -172,10 +172,10 @@
       let grid = this.get('n');
       let count = 0;
       let rowIdx = 0;
-      let colIdx = majorDiagonalColumnIndexAtFirstRow;
+      let colIdx = minorDiagonalColumnIndexAtFirstRow;
 
-      for ( ; rowIdx < grid && colIdx < grid; rowIdx++, colIdx--) {
-        if (colIdx >= 0) {
+      for ( ; rowIdx < grid && colIdx >= 0; rowIdx++, colIdx--) {
+        if (colIdx < grid) {
           let row = this.get(rowIdx);
           count += row[colIdx];
         }
@@ -187,7 +187,7 @@
     hasAnyMinorDiagonalConflicts: function() {
       let grid = this.get('n');
 
-      for (let i = (size * 2) - 1; i >= 0; i--) {
+      for (let i = (grid * 2) - 1; i >= 0; i--) {
         if (this.hasMinorDiagonalConflictAt(i)) {
           return true;
         }
